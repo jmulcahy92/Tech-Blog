@@ -1,1 +1,13 @@
-<p>hello world</p>
+{{#each posts as |post| }}
+<div>
+    <h2>
+        <a href="/post/{{post.id}}">{{post.title}}</a>
+    </h2>
+    <p>
+        POSTED BY: {{post.User.username}} on {{format_date post.createdAt}}
+    </p>
+    <p>
+        {{post.body}}
+    </p>
+</div>
+{{/each}}
