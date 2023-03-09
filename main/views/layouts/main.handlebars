@@ -11,7 +11,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="/homepage">Home</a>
+                    <a href="/">Home</a>
                 </li>
                 <li>
                     <a href="/dashboard">Dashboard</a>
@@ -31,5 +31,9 @@
     <main>
         {{{ body }}}
     </main>
+
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
 </body>
 </html>
