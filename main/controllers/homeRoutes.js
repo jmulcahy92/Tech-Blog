@@ -29,11 +29,29 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/dashboard', (req, res) => {
-  res.render('dashboard');
+router.get('/dashboard', withAuth, async (req, res) => {
+  let user = req.session;
+  try {
+    const postData = await Post.findAll({
+      where: {
+        userId: user.user_id
+      }
+    });
+
+    const posts = postData.map((post) => post.get({ plain: true }));
+
+    res.render('dashboard', {
+      user,
+      posts,
+      logged_in: user.logged_in
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
       include: [
@@ -62,10 +80,14 @@ router.get('/post/:id', async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/dashboard');
+    res.redirect('/');
     return;
   }
 
+  res.render('login');
+});
+
+router.get('*', (req, res) => {
   res.render('login');
 });
   

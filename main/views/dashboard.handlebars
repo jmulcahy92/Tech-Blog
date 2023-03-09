@@ -1,1 +1,41 @@
-dashboard!
+<div>
+<h2>Your posts:</h2>
+{{#if posts.length}}
+  <div class="col-md-6 post-list">
+    {{#each posts as |post|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
+        <p>Posted: {{format_date post.createdAt}}</p>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{post.id}}">UPDATE</button>
+        <button class="btn btn-sm btn-danger" data-id="{{post.id}}">DELETE</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p>No posts yet!</p>
+{{/if}}
+</div>
+
+{{!-- form for making new posts --}}
+
+  <div class="col-md-6">
+    <h3>Create a New Post:</h3>
+
+    <form class="form new-post-form">
+      <div class="form-group">
+        <label for="post-title">title:</label>
+        <input class="form-input" type="text" id="post-title" name="post-title" />
+      </div>
+      <div class="form-group">
+        <label for="post-body">body:</label>
+        <textarea class="form-input" id="post-body" name="post-body"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">CREATE</button>
+      </div>
+    </form>
+  </div>
