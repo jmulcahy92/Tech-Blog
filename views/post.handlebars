@@ -12,9 +12,13 @@
 
 <div>
     <h3>Comments</h3>
+    {{#if post.Comments.length}}
     <ul>
-        {{#each post.Comment as |comment|}}
-        <li>{{post.Comment.body}}</li>
+        {{#each post.Comments as |comment|}}
+        <li>{{comment.body}} - by {{comment.User.username}} on {{format_date comment.createdAt}}</li>
         {{/each}}
     </ul>
+    {{else}}
+    <p>No comments yet!</p>
+    {{/if}}
 </div>
